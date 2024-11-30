@@ -48,12 +48,13 @@ object HallOfFameAllStarPitchers extends App {
     .join(pitchingDF, Seq("playerID"))
     .select("playerID", "yearID", "ERA", "Hall of Fame Induction Year")
 
-  //  val windowByPlayerID = Window.partitionBy("playerID");
   val hallOfFameAllStarPitchersDF = allStarDF.
     select("playerID", "yearID", "gameNum")
     .join(hallOfFamePitchersDF, Seq("playerID", "yearID"))
     .groupBy("playerID", "Hall of Fame Induction Year")
     .agg(avg("ERA").alias("ERA"), count("*").alias("# All Star Appearances"))
     .select("playerID","ERA", "# All Star Appearances","Hall of Fame Induction Year")
-    .show()
+  hallOfFameAllStarPitchersDF.show()
+  hallOfFameAllStarPitchersDF.write.csv("output/hallOfFameAllStarPitchers.csv")
+  spark.stop()
 }

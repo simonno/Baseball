@@ -1,4 +1,3 @@
-import com.mysql.cj.jdbc.Driver
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions._
 
@@ -34,11 +33,13 @@ object AverageSalariesPerYear  {
       .option("password", "1111")
       .load()
     val pitcherSalariesDF = salariesDF.join(pitchingDF, Seq("playerID", "yearID"))
-      .groupBy(col("yearID")).avg("salary").select(col("yearID").alias("year"), col("avg(salary)").alias("Pitching"))
+      .groupBy(col("yearID")).avg("salary").select(col("yearID").alias("Year"), col("avg(salary)").alias("Pitching"))
     val infielderSalariesDF = salariesDF.join(fieldingDF, Seq("playerID", "yearID"))
-      .groupBy(col("yearID")).avg("salary").select(col("yearID").alias("year"), col("avg(salary)").alias("Pitching"))
+      .groupBy(col("yearID")).avg("salary").select(col("yearID").alias("Year"), col("avg(salary)").alias("Fielding"))
 
-    pitcherSalariesDF.join(infielderSalariesDF, "year").show()
-    infielderSalariesDF.show()
+    val resultDF = pitcherSalariesDF.join(infielderSalariesDF, "Year")
+    resultDF.show()
+    resultDF.write.option("header", "true").mode("overwrite").format("csv").save("output")
+    spark.stop()
   }
 }

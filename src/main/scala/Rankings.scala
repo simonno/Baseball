@@ -19,6 +19,9 @@ object Rankings extends App {
   val rankingsDF = teamsDF.select("teamID", "yearID", "Rank", "AB")
     .withColumn("min_rank", max("Rank").over(seasonYearWindow))
     .withColumn("max_rank", min("Rank").over(seasonYearWindow))
-    .where(col("Rank") === col("min_rank") || col("Rank") === col("max_rank"));
-  rankingsDF.select(col("teamID").alias("Team ID"), col("yearID").alias("Year"), col("Rank"), col("AB").alias("At Bats")).show()
+    .where(col("Rank") === col("min_rank") || col("Rank") === col("max_rank"))
+    .select(col("teamID").alias("Team ID"), col("yearID").alias("Year"), col("Rank"), col("AB").alias("At Bats"))
+  rankingsDF.show()
+  rankingsDF.write.csv("output/ranking.csv")
+  spark.stop()
 }

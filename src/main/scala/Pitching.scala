@@ -23,7 +23,7 @@ object Pitching extends App {
     .option("user", "root")
     .option("password", "1111")
     .load()
-  pitchingPostDF
+  val resultDF = pitchingPostDF
     .withColumn("Regular Season ERA", col("ERA"))
     .withColumn("Regular Season Win/Lose", round(col("w") / (col("w") + col("L")) * 100))
     .select("yearID", "playerID", "Regular Season ERA", "Regular Season Win/Lose")
@@ -33,5 +33,7 @@ object Pitching extends App {
         .withColumn("Post-Season Win/Lose", round(col("w") / (col("w") + col("L")) * 100))
         .select("yearID", "playerID", "Post-Season ERA", "Post-Season Win/Lose"),
       Seq("yearID", "playerID"))
-    .show()
+  resultDF.show()
+  resultDF.write.csv("output/pitching.csv")
+  spark.stop()
 }
