@@ -1,4 +1,4 @@
-import org.apache.spark.sql.{DataFrame, SQLContext, SparkSession}
+import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions._
 
 object AverageSalariesPerYear extends App {

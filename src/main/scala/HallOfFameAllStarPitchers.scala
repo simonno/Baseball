@@ -1,5 +1,4 @@
 import org.apache.spark.sql.SparkSession
-import org.apache.spark.sql.expressions.Window
 import org.apache.spark.sql.functions._
 
 //select * from lahman2016.allstarfull as a inner join (
