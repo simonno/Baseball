@@ -1,10 +1,10 @@
+import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.expressions.Window
-import org.apache.spark.sql.{DataFrame, SQLContext, SparkSession}
 import org.apache.spark.sql.functions._
 
 object Rankings extends App {
   val spark = SparkSession.builder()
-    .appName("AverageSalariesPerYear")
+    .appName("Ranking")
     .master("local")
     .getOrCreate()
   val teamsDF = spark.read
