@@ -22,6 +22,6 @@ object Rankings extends App {
     .where(col("Rank") === col("min_rank") || col("Rank") === col("max_rank"))
     .select(col("teamID").alias("Team ID"), col("yearID").alias("Year"), col("Rank"), col("AB").alias("At Bats"))
   rankingsDF.show()
-  rankingsDF.write.csv("output/ranking.csv")
+  rankingsDF.write.option("header", "true").mode("overwrite").format("csv").save("output")
   spark.stop()
 }

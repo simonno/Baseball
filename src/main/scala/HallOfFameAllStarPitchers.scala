@@ -55,6 +55,7 @@ object HallOfFameAllStarPitchers extends App {
     .agg(avg("ERA").alias("ERA"), count("*").alias("# All Star Appearances"))
     .select("playerID","ERA", "# All Star Appearances","Hall of Fame Induction Year")
   hallOfFameAllStarPitchersDF.show()
-  hallOfFameAllStarPitchersDF.write.csv("output/hallOfFameAllStarPitchers.csv")
+  hallOfFameAllStarPitchersDF.write.option("header", "true").mode("overwrite").format("csv").save("output")
+
   spark.stop()
 }

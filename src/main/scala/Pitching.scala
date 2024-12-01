@@ -35,5 +35,6 @@ object Pitching extends App {
       Seq("yearID", "playerID"))
   resultDF.show()
   resultDF.write.csv("output/pitching.csv")
+  resultDF.write.option("header", "true").mode("overwrite").format("csv").save("output")
   spark.stop()
 }
