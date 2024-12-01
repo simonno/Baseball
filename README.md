@@ -62,8 +62,8 @@ $SPARK_HOME/bin/spark-submit \
 
 To run the `HallOfFameAllStarPitchers` class, use the following command:
 
-```cmd
-%SPARK_HOME%/bin/spark-submit \
+```bash
+$SPARK_HOME/bin/spark-submit \
   --class HallOfFameAllStarPitchers \
   --master local[*] \
   target/scala-2.13/baseball_2.13-0.1.0.jar
